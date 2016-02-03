@@ -119,9 +119,9 @@ The runtime directory should now look like the following:
 
 ```
 matell@linux:~$ ls ~/coreclr-demo/runtime/
-corerun                       System.Console.dll
-libcoreclr.so                 System.Diagnostics.Debug.dll
-mscorlib.dll                  System.Globalization.Native.so
+corerun        System.Console.dll              System.IO.Compression.Native.so  System.Security.Cryptography.Native.so
+libcoreclr.so  System.Diagnostics.Debug.dll    System.Native.so
+mscorlib.dll   System.Globalization.Native.so  System.Net.Http.Native.so
 ```
 
 Download Dependencies
