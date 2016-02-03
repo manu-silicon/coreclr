@@ -111,7 +111,6 @@ ellismg@linux:~/git/corefx$ ./build.sh
 For the purposes of Hello World, you need to copy a few required files to the demo folder.
 
 ```
-ellismg@linux:~/git/corefx$ cp bin/Linux.x64.Debug/Native/*.so ~/coreclr-demo/runtime
 ellismg@linux:~/git/corefx$ cp bin/Linux.AnyCPU.Debug/System.Console/System.Console.dll ~/coreclr-demo/runtime
 ellismg@linux:~/git/corefx$ cp bin/Linux.AnyCPU.Debug/System.Diagnostics.Debug/System.Diagnostics.Debug.dll ~/coreclr-demo/runtime
 ```
@@ -120,11 +119,9 @@ The runtime directory should now look like the following:
 
 ```
 matell@linux:~$ ls ~/coreclr-demo/runtime/
-corerun                       System.Globalization.Native.so
-libcoreclr.so                 System.Native.so
-mscorlib.dll                  System.Net.Http.Native.so
-System.Console.dll            System.Security.Cryptography.Native.so
-System.Diagnostics.Debug.dll
+corerun                       System.Console.dll
+libcoreclr.so                 System.Diagnostics.Debug.dll
+mscorlib.dll                  System.Globalization.Native.so
 ```
 
 Download Dependencies
