@@ -240,7 +240,7 @@ extern BOOL g_fEEIJWStartup;
         }
 };
 
-#endif //defined(FEATURE_EVENT_TRACE)
+#endif //defined(FEATURE_EVENT_TRACE) || defined(FEATURE_EVENTSOURCE_XPLAT)
 
 #if defined(FEATURE_EVENT_TRACE)
 

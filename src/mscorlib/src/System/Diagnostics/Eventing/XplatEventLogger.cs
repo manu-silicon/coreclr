@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 using Contract = System.Diagnostics.Contracts.Contract;
 
-#if FEATURE_EVENTSOURCE_XPLAT
+#if FEATURE_PAL
 
 namespace System.Diagnostics.Tracing
 {
@@ -149,4 +149,4 @@ namespace System.Diagnostics.Tracing
         }
     }
 }
-#endif //FEATURE_EVENTSOURCE_XPLAT
+#endif //FEATURE_PAL
