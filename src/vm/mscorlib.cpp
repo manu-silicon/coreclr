@@ -130,12 +130,12 @@
 #include "windowsruntimebufferhelper.h"
 #endif
 
-#ifdef FEATURE_PAL
-// Only include definition for XplatEventSourceLogger
+#ifdef FEATURE_EVENTSOURCE_XPLAT
+// Set __EVENTTRACE_PRIV_H__ to only include the definition for XplatEventSourceLogger
 #define __EVENTTRACEPRIV_H__
 #include "eventtracepriv.h"
 #undef __EVENTTRACEPRIV_H__
-#endif // FEATURE_PAL
+#endif //FEATURE_EVENTSOURCE_XPLAT
 
 #endif // CROSSGEN_MSCORLIB
 

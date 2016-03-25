@@ -71,8 +71,7 @@ enum EtwThreadFlags
 
 #ifndef FEATURE_REDHAWK
 
-#if defined(FEATURE_EVENT_TRACE)
-#if  !defined(FEATURE_PAL)
+#if !defined(FEATURE_PAL) && defined(FEATURE_EVENT_TRACE)
 
 //
 // Use this macro at the least before calling the Event Macros
@@ -102,11 +101,18 @@ enum EtwThreadFlags
         ProviderSymbol##_Context.IsEnabled
 
 
-#else //defined(FEATURE_PAL)
+#else //!defined(FEATURE_PAL) && defined(FEATURE_EVENT_TRACE)
 
-#define ETW_INLINE  
 #define ETWOnStartup(StartEventName, EndEventName)
 #define ETWFireEvent(EventName)
+
+#ifdef FEATURE_PAL
+#define ETW_INLINE  
+#endif
+
+// Check again FEATURE_EVENT_TRACE, if it is set, we are on non-Windows
+// and we do tracing if FEATURE_EVENTSOURCE_XPLAT is set too.
+#if defined(FEATURE_EVENT_TRACE) && defined(FEATURE_EVENTSOURCE_XPLAT)
 
 #define ETW_TRACING_INITIALIZED(RegHandle) (TRUE)
 #define ETW_EVENT_ENABLED(Context, EventDescriptor) (XplatEventLogger::IsEventLoggingEnabled())
@@ -115,12 +121,7 @@ enum EtwThreadFlags
 #define ETW_TRACING_CATEGORY_ENABLED(Context, Level, Keyword) (XplatEventLogger::IsEventLoggingEnabled())
 #define ETW_PROVIDER_ENABLED(ProviderSymbol) (TRUE)
 
-#endif // !defined(FEATURE_PAL)
-
-#else // FEATURE_EVENT_TRACE
-
-#define ETWOnStartup(StartEventName, EndEventName)
-#define ETWFireEvent(EventName)
+#else
 
 #define ETW_TRACING_INITIALIZED(RegHandle) (FALSE)
 #define ETW_EVENT_ENABLED(Context, EventDescriptor) (FALSE)
@@ -129,7 +130,9 @@ enum EtwThreadFlags
 #define ETW_TRACING_CATEGORY_ENABLED(Context, Level, Keyword) (FALSE)
 #define ETW_PROVIDER_ENABLED(ProviderSymbol) (TRUE)
 
-#endif // FEATURE_EVENT_TRACE
+#endif //defined(FEATURE_EVENT_TRACE) && defined(FEATURE_EVENTSOURCE_XPLAT)
+
+#endif //!defined(FEATURE_PAL) && defined(FEATURE_EVENT_TRACE)
 
 #endif // FEATURE_REDHAWK
 
@@ -208,11 +211,10 @@ struct ProfilingScanContext;
 #endif // !DONOT_DEFINE_ETW_CALLBACK && !DACCESS_COMPILE
 #endif //!FEATURE_REDHAWK
 #endif //!defined(FEATURE_PAL)
-
-
-#else // FEATURE_EVENT_TRACE
-
+#else
+#ifndef FEATURE_EVENTSOURCE_XPLAT
 #include "etmdummy.h"
+#endif //FEATURE_EVENTSOURCE_XPLAT
 #endif // FEATURE_EVENT_TRACE
 
 #ifndef FEATURE_REDHAWK
@@ -227,7 +229,6 @@ extern BOOL g_fEEIJWStartup;
 
 #define GetClrInstanceId()  (static_cast<UINT16>(g_nClrInstanceId))
 
-#if defined(FEATURE_EVENT_TRACE) || defined(FEATURE_EVENTSOURCE_XPLAT)
 
 #include "clrconfig.h"
  class XplatEventLogger
@@ -235,12 +236,14 @@ extern BOOL g_fEEIJWStartup;
     public:
         inline static BOOL  IsEventLoggingEnabled()
         {
+#if defined(FEATURE_EVENTSOURCE_XPLAT)
             static ConfigDWORD configEventLogging;
             return configEventLogging.val(CLRConfig::EXTERNAL_EnableEventLog);
+#else //defined(FEATURE_EVENTSOURCE_XPLAT)
+            return false;
+#endif
         }
 };
-
-#endif //defined(FEATURE_EVENT_TRACE) || defined(FEATURE_EVENTSOURCE_XPLAT)
 
 #if defined(FEATURE_EVENT_TRACE)
 

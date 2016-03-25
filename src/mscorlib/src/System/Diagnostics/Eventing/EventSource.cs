@@ -251,9 +251,9 @@ namespace System.Diagnostics.Tracing
     public partial class EventSource : IDisposable
     {
 
-#if FEATURE_PAL
+#if FEATURE_EVENTSOURCE_XPLAT
         private static readonly EventListener persistent_Xplat_Listener = XplatEventLogger.InitializePersistentListener();
-#endif //FEATURE_PAL
+#endif //FEATURE_EVENTSOURCE_XPLAT
 
         /// <summary>
         /// The human-friendly name of the eventSource.  It defaults to the simple name of the class

@@ -408,20 +408,11 @@ private:
 
 #endif // __EVENTTRACEPRIV_H__
 
-#ifdef FEATURE_PAL
-
+#ifdef FEATURE_EVENTSOURCE_XPLAT
 class XplatEventSourceLogger
 {
-public:
-#ifdef FEATURE_EVENTSOURCE_XPLAT
     static void QCALLTYPE LogEventSource(__in_z int eventID, __in_z LPCWSTR eventName, __in_z LPCWSTR eventSourceName, __in_z LPCWSTR payload);
     static BOOL QCALLTYPE IsEventSourceLoggingEnabled();
-#else
-    static void QCALLTYPE LogEventSource(__in_z int eventID, __in_z LPCWSTR eventName, __in_z LPCWSTR eventSourceName, __in_z LPCWSTR payload) {};
-    static BOOL QCALLTYPE IsEventSourceLoggingEnabled() { return false; };
-#endif
-
-
 };
 
-#endif // FEATURE_PAL
+#endif // FEATURE_EVENSOURCE_XPLAT
